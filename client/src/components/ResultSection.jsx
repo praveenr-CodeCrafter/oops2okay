@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { Link as LinkIcon } from "lucide-react";
 
 export default function ResultSection() {
   const [activeTab, setActiveTab] = useState("results");
@@ -30,7 +31,9 @@ export default function ResultSection() {
 
       {activeTab === "results" ? (
         <div className="flex flex-col items-center justify-center h-full text-center text-sm text-[var(--color-muted)]">
-          <div className="text-3xl mb-2">🔗</div>
+            <div className="text-3xl mb-2">
+                <LinkIcon size={32} className="mx-auto text-[var(--color-accent)]" />
+            </div>
           <p className="font-semibold mb-1">No Results Yet</p>
           <p>Paste your code and error message, then click <br />“Debug Now” to get an analysis and fix</p>
         </div>

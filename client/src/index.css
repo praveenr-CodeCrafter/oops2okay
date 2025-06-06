@@ -16,23 +16,24 @@
 } */
 
 :root {
-  --color-bg: #f8f9fa;
-  --color-text: #000000;
-  --color-muted: #6c757d;
-  --color-border: #dee2e6;
-  --color-accent: #0d6efd;
+  --color-bg: #f5f7ff;      
+  --color-text: #22223b;    
+  --color-muted: #9a8c98;   
+  --color-border: #c9ada7;  
+  --color-accent: #f3722c;  
+  --color-panel: #ffffff;
 }
 
 .dark {
-  --color-bg: #0e1525;
-  --color-text: #ffffff;
-  --color-muted: #adb5bd;
-  --color-border: #1f2a3c;
-  --color-accent: #4dabf7;
+  --color-bg: #232946;      
+  --color-text: #eebbc3;    
+  --color-muted: #b8c1ec;   
+  --color-border: #393e46;  
+  --color-accent: #f9bc60;  
+  --color-panel: #1a1a2e;
 }
 
-body {
-  background-color: var(--color-bg);
-  color: var(--color-text);
-  transition: all 0.3s ease;
+textarea::placeholder {
+  color: var(--color-muted);
+  opacity: 1; 
 }
