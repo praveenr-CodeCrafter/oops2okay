@@ -28,7 +28,7 @@ export default function HowItWorksSection() {
             <div className="bg-[var(--color-panel)] p-4 rounded-full border border-[var(--color-border)]">
               {step.icon}
             </div>
-            <p className="text-base font-medium text-left text-[var(--color-text)] max-w-[180px]">
+            <p className="text-base font-medium text-left text-[var(--color-text)]">
               {step.text}
             </p>
             {index < steps.length - 1 && (
