@@ -1,22 +1,32 @@
 import { useState, useEffect } from "react";
+import axios from "axios";
 import { Sun, Moon, Menu, X } from "lucide-react";
+import { FiGithub } from "react-icons/fi";
 
 export default function Header() {
-  const [theme, setTheme] = useState(localStorage.getItem("theme") || "light");
-  const [menuOpen, setMenuOpen] = useState(false);
+    const [theme, setTheme] = useState(localStorage.getItem("theme") || "light");
+    const [menuOpen, setMenuOpen] = useState(false);
+    const [stars, setStars] = useState(null);
 
-  useEffect(() => {
-    document.documentElement.classList.toggle("dark", theme === "dark");
-    localStorage.setItem("theme", theme);
-  }, [theme]);
+    useEffect(() => {
+        document.documentElement.classList.toggle("dark", theme === "dark");
+        localStorage.setItem("theme", theme);
+    }, [theme]);
 
-  const toggleTheme = () => {
-    setTheme((prev) => (prev === "dark" ? "light" : "dark"));
-  };
+    useEffect(() => {
+        axios
+        .get("https://api.github.com/repos/praveenr-CodeCrafter/oops2okay")
+        .then((res) => setStars(res.data.stargazers_count)) 
+        .catch(() => setStars(null));
+    }, []);
 
-  const toggleMenu = () => {
-    setMenuOpen(!menuOpen);
-  };
+    const toggleTheme = () => {
+        setTheme((prev) => (prev === "dark" ? "light" : "dark"));
+    };
+
+    const toggleMenu = () => {
+        setMenuOpen(!menuOpen);
+    };
 
   return (
     <header className="w-full border-b px-8 py-3 border-[var(--color-border)] bg-[var(--color-bg)] text-[var(--color-text)] flex justify-between items-center relative">
@@ -24,11 +34,20 @@ export default function Header() {
 
       <div className="flex items-center gap-4">
         <a
-          href="#how-it-works"
-          className="text-sm font-medium text-[var(--color-muted)] hover:text-[var(--color-text)] transition hidden sm:inline"
+            href="https://github.com/praveenr-CodeCrafter/oops2okay"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="hidden sm:flex items-center gap-1 text-sm font-medium text-[var(--color-muted)] hover:text-[var(--color-text)] transition"
         >
-          How It Works
+            <FiGithub  size={18} className="mr-1" />
+            Open Source
+            {stars !== null && (
+                <span className="ml-1 px-2 py-0.5 rounded bg-[var(--color-panel)] border border-[var(--color-border)] text-[var(--color-accent)] font-semibold inline-flex items-center">
+                    {stars} ★
+                </span>
+            )}
         </a>
+
 
         <button
           onClick={toggleTheme}
