@@ -1,0 +1,52 @@
+# Byte-compiled / optimized / DLL files
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Virtual environment
+venv/
+env/
+.venv/
+.env/
+
+# VS Code and other IDE/editor settings
+.vscode/
+.idea/
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Python egg info
+*.egg-info/
+*.egg
+
+# Pip and Poetry
+pip-log.txt
+poetry.lock
+
+# Logs
+*.log
+
+# Pytest cache
+.pytest_cache/
+
+# MyPy
+.mypy_cache/
+
+# Coverage reports
+htmlcov/
+.coverage
+coverage.xml
+.cache
+
+# Database / data files (optional)
+# *.sqlite3
+# *.db
+
+# Environment variable files (optional)
+.env
+.env.*
+
+# Uvicorn reload file (if used)
+reload.*
