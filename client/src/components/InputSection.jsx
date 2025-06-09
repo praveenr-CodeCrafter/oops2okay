@@ -1,11 +1,29 @@
 import { useState } from "react";
 import { X } from "lucide-react"; 
+import axios from "axios";
 
 export default function InputSection() {
     const [code, setCode] = useState("");
     const [error, setError] = useState("");
+    const [loading, setLoading] = useState(false);
+    const [result, setResult] = useState(null);
 
     const isDisabled = code.trim() === "" || error.trim() === "";
+
+    const handleDebug = async () => {
+        setLoading(true);
+        try {
+            const res = await axios.post("http://localhost:8000/debug", {
+                code,
+                error
+            });
+            setResult(res.data);
+        } catch (err) {
+            setResult({ message: "Error connecting to backend." });
+        } finally {
+            setLoading(false);
+        }
+    };
 
     return (
         <section className="md:w-1/2 w-full bg-[var(--color-panel)] border border-[var(--color-border)] rounded-xl p-4 flex flex-col h-full">
@@ -66,8 +84,9 @@ export default function InputSection() {
                     : "bg-[var(--color-accent)] hover:opacity-90 text-white"}
                 `}
                 disabled={isDisabled}
+                onClick={handleDebug}
             >
-                Debug Now →
+                {loading ? "Debugging..." : "Debug Now →"}
             </button>
         </section>
     );
