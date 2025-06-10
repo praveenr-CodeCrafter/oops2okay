@@ -1,6 +1,7 @@
 from fastapi import FastAPI, Request
 from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel
+from routers import debug
 
 app = FastAPI()
 
@@ -13,12 +14,14 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
-class DebugRequest(BaseModel):
-    code: str
-    error: str
+# class DebugRequest(BaseModel):
+#     code: str
+#     error: str
 
-@app.post("/debug")
-async def debug_code(request: DebugRequest):
-    print(f"Received code: {request.code}")
-    print(f"Received error: {request.error}")
-    return {"message": "Received!", "code": request.code, "error": request.error}
+# @app.post("/debug")
+# async def debug_code(request: DebugRequest):
+#     print(f"Received code: {request.code}")
+#     print(f"Received error: {request.error}")
+#     return {"message": "Received!", "code": request.code, "error": request.error}
+
+app.include_router(debug.router)
