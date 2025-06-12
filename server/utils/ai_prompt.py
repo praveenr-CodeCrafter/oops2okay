@@ -1,6 +1,6 @@
 def generate_debug_prompt(code: str, error: str) -> str:
     return f"""
-You are a code debugging assistant. Analyze the following code and help the user understand the error and provide a fix.
+You are an expert programming assistant. The user submitted the following code and received an error.
 
 Code:
 {code}
@@ -8,8 +8,26 @@ Code:
 Error:
 {error}
 
-Instructions:
-- Explain why the error occurred.
-- Suggest a fix with updated code if applicable.
-- Be concise and clear.
+Please return a JSON object with the following keys:
+
+{{
+  "root_cause": "<short sentence>",
+  "explanation": {{
+    "non_technical": "<explain like I'm five>",
+    "technical": "<developer explanation>"
+  }},
+  "suggested_fix": {{
+    "code": "<corrected code block>",
+    "explanation": "<brief sentence explaining the fix>"
+  }},
+  "references": [
+    {{
+      "title": "<resource title>",
+      "url": "<link>",
+      "description": "<short description>"
+    }}
+  ]
+}}
+
+Only return valid JSON.
 """
