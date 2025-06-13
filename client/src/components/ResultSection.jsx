@@ -1,9 +1,14 @@
 import { useState } from "react";
 // import { Link as LinkIcon } from "lucide-react";
-import { Link as LinkIcon, Clock as ClockIcon } from "lucide-react";
+import { Link as LinkIcon, Clock as ClockIcon, Copy as CopyIcon, ExternalLink } from "lucide-react";
 
-export default function ResultSection() {
+export default function ResultSection({ result }) {
     const [activeTab, setActiveTab] = useState("results");
+    const prompt = result?.prompt;
+
+    const handleCopy = (text) => {
+        navigator.clipboard.writeText(text);
+    };
 
     return (
         <section className="md:w-1/2 w-full bg-[var(--color-panel)] border border-[var(--color-border)] rounded-xl p-4">
@@ -31,13 +36,89 @@ export default function ResultSection() {
             </div>
 
             {activeTab === "results" ? (
-                <div className="flex flex-col items-center justify-center h-full text-center text-sm text-[var(--color-muted)]">
-                    <div className="text-3xl mb-2">
-                        <LinkIcon size={32} className="mx-auto text-[var(--color-accent)]" />
+                prompt ? (
+                    <div className="space-y-6 text-sm text-[var(--color-text)]">
+                        {/* Explanation Section */}
+                        <h2 className="font-semibold text-[var(--color-accent)] mb-8">Analysis Results</h2>
+                        <div>
+                            <h4 className="font-semibold text-[var(--color-accent)] mb-2">Root Cause</h4>
+                            {/* Root Cause */}
+                            <div className="bg-[var(--color-bg)] border border-[var(--color-border)] rounded p-3 mb-3">
+                                {/* <span className="font-semibold text-[var(--color-accent)]">Root Cause: </span> */}
+                                {prompt.root_cause}
+                            </div>
+                        </div>
+                        <div>
+                            <h4 className="font-semibold text-[var(--color-accent)] mb-2">Explanation</h4>
+                            {/* Non-Technical */}
+                            <div className="bg-[var(--color-bg)] border border-[var(--color-border)] rounded p-3 mb-2">
+                                <span className="font-medium text-[var(--color-accent)]">Non-Technical</span>
+                                <p className="mt-1">{prompt.explanation.non_technical}</p>
+                            </div>
+                            {/* Technical */}
+                            <div className="bg-[var(--color-bg)] border border-[var(--color-border)] rounded p-3">
+                                <span className="font-medium text-[var(--color-accent)]">Technical</span>
+                                <p className="mt-1">{prompt.explanation.technical}</p>
+                            </div>
+                        </div>
+
+                        {/* Suggested Fix */}
+                        <div>
+                            <div className="flex items-center justify-between mb-1">
+                                <h4 className="font-semibold text-[var(--color-accent)]">Suggested Fix</h4>
+                                <button
+                                    className="flex items-center gap-1 text-xs text-[var(--color-muted)] hover:text-[var(--color-accent)]"
+                                    onClick={() => handleCopy(prompt.suggested_fix.code)}
+                                >
+                                    <CopyIcon size={14} /> Copy Fix
+                                </button>
+                            </div>
+                            <pre className="bg-[#232946] p-3 rounded-md overflow-auto text-xs mb-2">
+                                {prompt.suggested_fix.code}
+                            </pre>
+                            <div className="text-[var(--color-muted)]">{prompt.suggested_fix.explanation}</div>
+                        </div>
+
+                        {/* References */}
+                        <div>
+                            <h4 className="font-semibold text-[var(--color-accent)] mb-2">References</h4>
+                            <ul className="space-y-2">
+                                {prompt.references.map((ref, idx) => (
+                                    <li key={idx} className="bg-[var(--color-bg)] border border-[var(--color-border)] rounded p-2 flex items-center justify-between">
+                                        <div>
+                                            <a
+                                                href={ref.url}
+                                                target="_blank"
+                                                rel="noopener noreferrer"
+                                                className="text-[var(--color-accent)] font-medium hover:underline flex items-center"
+                                            >
+                                                {ref.title}
+                                            </a>
+                                            <div className="text-[var(--color-muted)] text-xs">{ref.description}</div>
+                                        </div>
+                                        <a
+                                            href={ref.url}
+                                            target="_blank"
+                                            rel="noopener noreferrer"
+                                            className="ml-2 text-[var(--color-accent)] hover:text-[var(--color-text)]"
+                                            aria-label="Open reference"
+                                        >
+                                            <ExternalLink size={16} />
+                                        </a>
+                                    </li>
+                                ))}
+                            </ul>
+                        </div>
                     </div>
-                    <p className="font-semibold mb-1">No Results Yet</p>
-                    <p>Paste your code and error message, then click <br />“Debug Now” to get an analysis and fix</p>
-                </div>
+                ) : (
+                    <div className="flex flex-col items-center justify-center h-full text-center text-sm text-[var(--color-muted)]">
+                        <div className="text-3xl mb-2">
+                            <LinkIcon size={32} className="mx-auto text-[var(--color-accent)]" />
+                        </div>
+                        <p className="font-semibold mb-1">No Results Yet</p>
+                        <p>Paste your code and error message, then click <br />“Debug Now” to get an analysis and fix</p>
+                    </div>
+                )
             ) : (
             <div className="flex flex-col h-full">
                 <h3 className="text-base font-semibold mb-6 text-[var(--color-text)]">Recent Debugs</h3>

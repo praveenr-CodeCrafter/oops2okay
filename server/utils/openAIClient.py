@@ -1,27 +1,30 @@
-from openai import OpenAI
-import json, os
+import google.generativeai as genai
+import json, os, re
 from dotenv import load_dotenv
 from fastapi import HTTPException
 
 
 load_dotenv()
-client = OpenAI(api_key=os.getenv("OPENAI_API_KEY"))
+GOOGLE_API_KEY = os.getenv("GOOGLE_AI_API_KEY")
+genai.configure(api_key=GOOGLE_API_KEY)
+model = genai.GenerativeModel("gemini-2.0-flash")
 
-def get_openai_response(prompt: str) -> str:
+def clean_json_response(text: str) -> str:
+    # Remove code block markdown (```json ... ```)
+    return re.sub(r"^```(?:json)?\n([\s\S]*?)\n```$", r"\1", text.strip())
+
+def get_googleai_response(prompt: str) -> dict:
     try:
-        response = client.chat.completions.create(
-            model="gpt-3.5-turbo", 
-            messages=[
-                {"role": "system", "content": "You are a helpful assistant that outputs valid JSON for debugging code."},
-                {"role": "user", "content": prompt}
-            ],
-            temperature=0.4,
-            max_tokens=1000
-        )
-        # message = response['choices'][0]['message']['content']
-        message = response.choices[0].message.content
-        return json.loads(message)
+        response = model.generate_content(prompt)
+
+        if not response or not response.text:
+            raise HTTPException(status_code=500, detail="No response from Gemini.")
+        
+        cleaned = clean_json_response(response.text)
+        data = json.loads(cleaned)
+        return data
+
     except json.JSONDecodeError:
-        raise HTTPException(status_code=500, detail="Invalid JSON returned by OpenAI.")
+        raise HTTPException(status_code=500, detail="Invalid JSON returned by Gemini.")
     except Exception as e:
         raise HTTPException(status_code=500, detail=str(e))

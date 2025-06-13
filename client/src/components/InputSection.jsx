@@ -2,11 +2,10 @@ import { useState } from "react";
 import { X } from "lucide-react"; 
 import axios from "axios";
 
-export default function InputSection() {
+export default function InputSection({ setResult }) {
     const [code, setCode] = useState("");
     const [error, setError] = useState("");
     const [loading, setLoading] = useState(false);
-    const [result, setResult] = useState(null);
 
     const isDisabled = code.trim() === "" || error.trim() === "";
 
