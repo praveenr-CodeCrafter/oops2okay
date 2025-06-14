@@ -1,14 +1,28 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 // import { Link as LinkIcon } from "lucide-react";
-import { Link as LinkIcon, Clock as ClockIcon, Copy as CopyIcon, ExternalLink } from "lucide-react";
+import { Link as LinkIcon, Clock as ClockIcon, Copy as CopyIcon, ExternalLink, Trash2 } from "lucide-react";
+import { getDebugHistory, clearDebugHistory } from '../utils/localStorage';
 
 export default function ResultSection({ result }) {
     const [activeTab, setActiveTab] = useState("results");
+    const [history, setHistory] = useState([]);
     const prompt = result?.prompt;
+
+    useEffect(() => {
+        if (activeTab === "history") {
+            setHistory(getDebugHistory());
+        }
+    }, [activeTab]);
 
     const handleCopy = (text) => {
         navigator.clipboard.writeText(text);
     };
+
+    const handleClearHistory = () => {
+        clearDebugHistory();
+        setHistory([]);
+    };
+
 
     return (
         <section className="md:w-1/2 w-full bg-[var(--color-panel)] border border-[var(--color-border)] rounded-xl p-4">
@@ -39,12 +53,11 @@ export default function ResultSection({ result }) {
                 prompt ? (
                     <div className="space-y-6 text-sm text-[var(--color-text)]">
                         {/* Explanation Section */}
-                        <h2 className="font-semibold text-[var(--color-accent)] mb-8">Analysis Results</h2>
+                        <h2 className="text-2xl font-semibold text-[var(--color-accent)] mb-8">Analysis Results</h2>
                         <div>
                             <h4 className="font-semibold text-[var(--color-accent)] mb-2">Root Cause</h4>
                             {/* Root Cause */}
                             <div className="bg-[var(--color-bg)] border border-[var(--color-border)] rounded p-3 mb-3">
-                                {/* <span className="font-semibold text-[var(--color-accent)]">Root Cause: </span> */}
                                 {prompt.root_cause}
                             </div>
                         </div>
@@ -67,13 +80,13 @@ export default function ResultSection({ result }) {
                             <div className="flex items-center justify-between mb-1">
                                 <h4 className="font-semibold text-[var(--color-accent)]">Suggested Fix</h4>
                                 <button
-                                    className="flex items-center gap-1 text-xs text-[var(--color-muted)] hover:text-[var(--color-accent)]"
+                                    className="flex items-center gap-1 text-xs text-[var(--color-muted)] hover:text-[var(--color-accent)] cursor-pointer"
                                     onClick={() => handleCopy(prompt.suggested_fix.code)}
                                 >
                                     <CopyIcon size={14} /> Copy Fix
                                 </button>
                             </div>
-                            <pre className="bg-[#232946] p-3 rounded-md overflow-auto text-xs mb-2">
+                            <pre className="bg-[var(--color-bg)] border border-[var(--color-border)] p-3 rounded-md overflow-auto text-xs mb-2">
                                 {prompt.suggested_fix.code}
                             </pre>
                             <div className="text-[var(--color-muted)]">{prompt.suggested_fix.explanation}</div>
@@ -121,13 +134,43 @@ export default function ResultSection({ result }) {
                 )
             ) : (
             <div className="flex flex-col h-full">
-                <h3 className="text-base font-semibold mb-6 text-[var(--color-text)]">Recent Debugs</h3>
-                <div className="flex flex-col flex-1 items-center justify-center text-center">
-                    <ClockIcon size={48} className="text-[var(--color-muted)] mb-2" />
-                    <p className="text-[var(--color-muted)] text-sm">No debug history yet</p>
+                    <div className="flex items-center justify-between mb-6">
+                        <h3 className="text-base font-semibold text-[var(--color-text)]">Recent Debugs</h3>
+                        {history.length > 0 && (
+                            <button
+                                onClick={handleClearHistory}
+                                className="flex items-center gap-1 text-xs text-[var(--color-muted)] hover:text-[var(--color-accent)]"
+                            >
+                                <Trash2 size={14} /> Clear All
+                            </button>
+                        )}
+                    </div>
+                    
+                    {history.length > 0 ? (
+                        <div className="space-y-3 ">
+                            {history.map((entry, index) => (
+                                <div key={entry.id} className="bg-[var(--color-bg)] border border-[var(--color-border)] rounded p-3">
+                                    <div className="flex items-center justify-between mb-2">
+                                        <h4 className="font-medium text-[var(--color-text)] truncate">
+                                            {entry.result.prompt?.root_cause || 'Debug Result'}
+                                        </h4>
+                                        <span className="text-xs text-[var(--color-muted)]">
+                                            {entry.date} {entry.time}
+                                        </span>
+                                    </div>
+                                    <p className="text-xs text-[var(--color-muted)] line-clamp-2">
+                                        {entry.result.prompt?.explanation?.non_technical || 'No explanation available'}
+                                    </p>
+                                </div>
+                            ))}
+                        </div>
+                    ) : (
+                        <div className="flex flex-col flex-1 items-center justify-center text-center">
+                            <ClockIcon size={48} className="text-[var(--color-muted)] mb-2" />
+                            <p className="text-[var(--color-muted)] text-sm">No debug history yet</p>
+                        </div>
+                    )}
                 </div>
-            </div>
-
             )}
         </section>
     );

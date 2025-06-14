@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { X } from "lucide-react"; 
 import axios from "axios";
+import { saveDebugResult } from '../utils/localStorage';
 
 export default function InputSection({ setResult }) {
     const [code, setCode] = useState("");
@@ -16,6 +17,7 @@ export default function InputSection({ setResult }) {
                 code,
                 error
             });
+            const savedEntry = saveDebugResult(res.data);
             setResult(res.data);
         } catch (err) {
             setResult({ message: "Error connecting to backend." });
