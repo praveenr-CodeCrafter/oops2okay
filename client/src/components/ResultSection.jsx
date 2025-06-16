@@ -97,31 +97,31 @@ export default function ResultSection({ result }) {
                             <h4 className="font-semibold text-[var(--color-accent)] mb-2">References</h4>
                             <ul className="space-y-2">
                                 {prompt.references.map((ref, idx) => (
-                                    <li key={idx} className="bg-[var(--color-bg)] border border-[var(--color-border)] rounded p-2 flex items-center justify-between">
-                                        <div>
-                                            <a
-                                                href={ref.url}
-                                                target="_blank"
-                                                rel="noopener noreferrer"
-                                                className="text-[var(--color-accent)] font-medium hover:underline flex items-center"
-                                            >
-                                                {ref.title}
-                                            </a>
-                                            <div className="text-[var(--color-muted)] text-xs">{ref.description}</div>
-                                        </div>
+                                    <li key={idx} className="bg-[var(--color-bg)] border border-[var(--color-border)] rounded p-2">
                                         <a
                                             href={ref.url}
                                             target="_blank"
                                             rel="noopener noreferrer"
-                                            className="ml-2 text-[var(--color-accent)] hover:text-[var(--color-text)]"
-                                            aria-label="Open reference"
+                                            className="flex items-center justify-between group"
                                         >
-                                            <ExternalLink size={16} />
+                                            <div>
+                                                <div className="text-[var(--color-accent)] font-medium group-hover:underline">
+                                                    {ref.title}
+                                                </div>
+                                                <div className="text-[var(--color-muted)] text-xs">
+                                                    {ref.description}
+                                                </div>
+                                            </div>
+                                            <ExternalLink
+                                                size={16}
+                                                className="text-[var(--color-accent)] group-hover:text-[var(--color-text)]"
+                                            />
                                         </a>
                                     </li>
                                 ))}
                             </ul>
                         </div>
+
                     </div>
                 ) : (
                     <div className="flex flex-col items-center justify-center h-full text-center text-sm text-[var(--color-muted)]">
@@ -139,7 +139,7 @@ export default function ResultSection({ result }) {
                         {history.length > 0 && (
                             <button
                                 onClick={handleClearHistory}
-                                className="flex items-center gap-1 text-xs text-[var(--color-muted)] hover:text-[var(--color-accent)]"
+                                className="flex items-center gap-1 text-xs text-[var(--color-muted)] hover:text-[var(--color-accent)] cursor-pointer"
                             >
                                 <Trash2 size={14} /> Clear All
                             </button>

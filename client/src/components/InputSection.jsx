@@ -82,7 +82,7 @@ export default function InputSection({ setResult }) {
                 className={`w-full py-2 mt-2 rounded-md font-medium transition
                     ${isDisabled
                     ? "bg-[var(--color-border)] text-[var(--color-muted)] cursor-not-allowed"
-                    : "bg-[var(--color-accent)] hover:opacity-90 text-white"}
+                    : "bg-[var(--color-accent)] hover:opacity-90 text-white cursor-pointer"}
                 `}
                 disabled={isDisabled}
                 onClick={handleDebug}
