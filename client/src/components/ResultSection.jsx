@@ -3,7 +3,7 @@ import { useState, useEffect } from "react";
 import { Link as LinkIcon, Clock as ClockIcon, Copy as CopyIcon, ExternalLink, Trash2 } from "lucide-react";
 import { getDebugHistory, clearDebugHistory } from '../utils/localStorage';
 
-export default function ResultSection({ result }) {
+export default function ResultSection({ result, setResult }) {
     const [activeTab, setActiveTab] = useState("results");
     const [history, setHistory] = useState([]);
     const prompt = result?.prompt;
@@ -149,19 +149,26 @@ export default function ResultSection({ result }) {
                     {history.length > 0 ? (
                         <div className="space-y-3 ">
                             {history.map((entry, index) => (
-                                <div key={entry.id} className="bg-[var(--color-bg)] border border-[var(--color-border)] rounded p-3">
+                                <button
+                                    key={entry.id}
+                                    onClick={() => {
+                                    setActiveTab("results");  
+                                    setResult(entry.result); 
+                                    }}
+                                    className="w-full text-left bg-[var(--color-bg)] border border-[var(--color-border)] rounded p-3 hover:border-[var(--color-accent)] transition"
+                                >
                                     <div className="flex items-center justify-between mb-2">
-                                        <h4 className="font-medium text-[var(--color-text)] truncate">
-                                            {entry.result.prompt?.root_cause || 'Debug Result'}
-                                        </h4>
-                                        <span className="text-xs text-[var(--color-muted)]">
-                                            {entry.date} {entry.time}
-                                        </span>
+                                    <h4 className="font-medium text-[var(--color-text)] truncate">
+                                        {entry.result.prompt?.root_cause || 'Debug Result'}
+                                    </h4>
+                                    <span className="text-xs text-[var(--color-muted)]">
+                                        {entry.date} {entry.time}
+                                    </span>
                                     </div>
                                     <p className="text-xs text-[var(--color-muted)] line-clamp-2">
-                                        {entry.result.prompt?.explanation?.non_technical || 'No explanation available'}
+                                    {entry.result.prompt?.explanation?.non_technical || 'No explanation available'}
                                     </p>
-                                </div>
+                                </button>
                             ))}
                         </div>
                     ) : (

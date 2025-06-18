@@ -10,7 +10,9 @@ export default function MainContent() {
         <main className="flex-1 flex items-center justify-center px-4 py-8">
             <div className="w-full max-w-7xl flex flex-col md:flex-row gap-8">
                 <InputSection setResult={setResult} />
-                <ResultSection result={result} />
+                {/* <ResultSection result={result} /> */}
+                <ResultSection result={result} setResult={setResult} />
+
             </div>
         </main>
     );
