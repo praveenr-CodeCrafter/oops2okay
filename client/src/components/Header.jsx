@@ -4,7 +4,7 @@ import { Sun, Moon, Menu, X } from "lucide-react";
 import { FiGithub } from "react-icons/fi";
 
 export default function Header() {
-    const [theme, setTheme] = useState(localStorage.getItem("theme") || "light");
+    const [theme, setTheme] = useState("dark");
     const [menuOpen, setMenuOpen] = useState(false);
     const [stars, setStars] = useState(null);
 

@@ -1,7 +1,7 @@
 from fastapi import APIRouter
-from models.debug_model import DebugRequest
-from utils.ai_prompt import generate_debug_prompt
-from utils.openAIClient import get_googleai_response
+from models.debugModel import DebugRequest
+from utils.aiPrompt import generateDebugPrompt
+from utils.openAIClient import getGoogleaiResponse
 
 router = APIRouter()
 
@@ -9,11 +9,10 @@ router = APIRouter()
 async def debug_code(request: DebugRequest):
     code = request.code
     error = request.error
-    prompt = generate_debug_prompt(code, error)
-    response = get_googleai_response(prompt)
+    prompt = generateDebugPrompt(code, error)
+    response = getGoogleaiResponse(prompt)
     if not response:
         return {"message": "No response from AI"}
-    print(f"Received code: {response}")
 
     return {
         "message": "Prompt generated",

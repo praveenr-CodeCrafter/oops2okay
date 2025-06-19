@@ -1,4 +1,4 @@
-def generate_debug_prompt(code: str, error: str) -> str:
+def generateDebugPrompt(code: str, error: str) -> str:
     return f"""
 You are an expert programming assistant. The user submitted the following code and received an error.
 
