@@ -10,12 +10,12 @@ export default function InputSection({ setResult }) {
 
     const isDisabled = code.trim() === "" || error.trim() === "";
     const BACKEND_URL = import.meta.env.VITE_BACKEND_URL;
+    console.log("Backend URL:", BACKEND_URL);
 
     const handleDebug = async () => {
         setLoading(true);
         try {
             const res = await axios.post(`${BACKEND_URL}/debug`, {
-            // const res = await axios.post("http://localhost:8000/debug", {
                 code,
                 error
             });
