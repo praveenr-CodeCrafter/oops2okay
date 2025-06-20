@@ -155,7 +155,7 @@ export default function ResultSection({ result, setResult }) {
                                     setActiveTab("results");  
                                     setResult(entry.result); 
                                     }}
-                                    className="w-full text-left bg-[var(--color-bg)] border border-[var(--color-border)] rounded p-3 hover:border-[var(--color-accent)] transition"
+                                    className="w-full text-left bg-[var(--color-bg)] border border-[var(--color-border)] rounded p-3 hover:border-[var(--color-accent)] transition cursor-pointer"
                                 >
                                     <div className="flex items-center justify-between mb-2">
                                     <h4 className="font-medium text-[var(--color-text)] truncate">

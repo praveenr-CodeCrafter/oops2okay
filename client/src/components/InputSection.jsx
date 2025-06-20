@@ -51,7 +51,8 @@ export default function InputSection({ setResult }) {
                     placeholder="// Paste your code here..."
                     value={code}
                     onChange={e => setCode(e.target.value)}
-                    className="w-full p-3 rounded-md bg-[var(--color-bg)] border border-[var(--color-border)] text-sm resize-y min-h-[100px] text-[var(--color-text)]"
+                    // className="w-full p-3 rounded-md bg-[var(--color-bg)] border border-[var(--color-border)] text-sm resize-y min-h-[100px] max-h-[250px] overflow-y-auto text-[var(--color-text)]"
+                    className="w-full p-3 rounded-md bg-[var(--color-bg)] border border-[var(--color-border)] text-sm resize-y min-h-[100px] max-h-[300px] font-mono text-[var(--color-text)] overflow-y-auto custom-scroll"
                 />
             </div>
 
