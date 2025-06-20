@@ -18,7 +18,7 @@ const steps = [
 export default function HowItWorksSection() {
   return (
     <section className="px-6 py-12 max-w-5xl mx-auto text-center">
-      <h2 className="text-2xl font-bold mb-10 text-[var(--color-text)]">
+      <h2 className="text-2xl font-bold mb-10 text-[var(--color-muted)]">
         How it works
       </h2>
 
@@ -28,7 +28,7 @@ export default function HowItWorksSection() {
             <div className="bg-[var(--color-panel)] p-4 rounded-full border border-[var(--color-border)]">
               {step.icon}
             </div>
-            <p className="text-base font-medium text-left text-[var(--color-text)]">
+            <p className="text-base font-medium text-left text-[var(--color-muted)]">
               {step.text}
             </p>
             {index < steps.length - 1 && (
