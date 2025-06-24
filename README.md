@@ -6,17 +6,19 @@
 
 ## 📁 Project Structure
 oops2okay/
-├── client/ # React + Vite frontend
-└── server/ # Backend (FastAPI)
+├── client/ Frontend (React + Vite)
+└── server/ Backend (Gemini-powered API)
 
 ---
 
 ## 🚀 Features
 
-- 🔍 Paste code + error → Get instant AI-powered debug suggestions.
-- 🎨 Clean and responsive UI (Tailwind + Lucide).
-- 💾 Optional local storage of previous results.
-- 🌙 Light/dark mode support.
+- **Paste code and error:** Instantly analyze your code and error messages.
+- **AI-powered explanations:** Get both non-technical and technical breakdowns.
+- **Suggested fixes:** Receive ready-to-use code corrections.
+- **Reference links:** Learn more with curated resources.
+- **History:** Local storage of recent debug sessions.
+- **Responsive UI:** Works great on all devices.
 
 ---
 
@@ -31,27 +33,54 @@ oops2okay/
 
 ### Backend
 
-- **FastAPI** 
-- **OpenAI API** 
+- **FastAPI (Python)** 
+- **Gemini 2.0 Flash API (Google)** 
 
 ---
 
 ## ⚙️ Setup Instructions
 
-### 1. Clone the Repository
+### 1️⃣ Clone the Repository
 
 ```bash
 git clone https://github.com/your-username/oops2okay.git
 cd oops2okay
 ```
 
-### 2. Setup & Run Backend
+### 2️⃣ Setup & Run Backend
 
 ```bash
 cd server
 
-# Create a .env file
-cp .env.example .env
+python -m venv venv
+source venv/bin/activate  # On Windows: venv\Scripts\activate
+
+# Create and add this to your .env file
+GOOGLE_AI_API_KEY=your_gemini_api_key
+FRONTEND_ORIGIN=http://localhost:5173
+
+pip install -r requirements.txt
+uvicorn main:app --reload
 ```
 
 
+### 3️⃣ Frontend Setup
+
+```bash
+cd ../client
+
+# Create and add this to your .env file
+VITE_BACKEND_URL=http://localhost:8000
+
+npm install
+npm run dev
+```
+---
+## ⚡ Example Usage
+- **_Paste your code and error in the input section._**
+- **_Click "Debug Now"._**
+- **_Instantly view the root cause, explanations, suggested fix, and references._**
+- **_Browse your debug history and revisit past results anytime._**
+
+## 🛡️ License
+This project is licensed under the MIT License.

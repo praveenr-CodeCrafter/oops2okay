@@ -65,16 +65,25 @@ export default function Header() {
       </div>
 
       {menuOpen && (
-        <div className="absolute top-full left-0 w-full bg-[var(--color-bg)] border-t border-[var(--color-border)] sm:hidden z-50 shadow-md">
-          <a
-            href="#how-it-works"
-            onClick={() => setMenuOpen(false)}
-            className="block px-6 py-3 text-sm text-[var(--color-muted)] hover:text-[var(--color-text)] transition"
-          >
-            How It Works
-          </a>
-        </div>
+  <div className="absolute top-full left-0 w-full bg-[var(--color-bg)] border-t border-[var(--color-border)] sm:hidden z-50 shadow-md">
+    <a
+      href="https://github.com/praveenr-CodeCrafter/oops2okay"
+      target="_blank"
+      rel="noopener noreferrer"
+      onClick={() => setMenuOpen(false)}
+      className="flex items-center gap-2 px-6 py-3 text-sm text-[var(--color-muted)] hover:text-[var(--color-text)] transition"
+    >
+      <FiGithub size={18} />
+      GitHub
+      {stars !== null && (
+        <span className="ml-1 px-2 py-0.5 rounded bg-[var(--color-panel)] border border-[var(--color-border)] text-[var(--color-accent)] font-semibold inline-flex items-center">
+          {stars} ★
+        </span>
       )}
+    </a>
+  </div>
+)}
+
     </header>
   );
 }
