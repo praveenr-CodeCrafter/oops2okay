@@ -4,13 +4,6 @@
 
 ---
 
-## 📁 Project Structure
-oops2okay/
-├── client/ Frontend (React + Vite)
-└── server/ Backend (Gemini-powered API)
-
----
-
 ## 🚀 Features
 
 - **Paste code and error:** Instantly analyze your code and error messages.
