@@ -10,7 +10,6 @@ genai.configure(api_key=GOOGLE_API_KEY)
 model = genai.GenerativeModel("gemini-2.0-flash")
 
 def cleanJsonResponse(text: str) -> str:
-    # Remove code block markdown (```json ... ```)
     return re.sub(r"^```(?:json)?\n([\s\S]*?)\n```$", r"\1", text.strip())
 
 def getGoogleaiResponse(prompt: str) -> dict:

@@ -1,4 +1,3 @@
-// Store debug result with timestamp
 export const saveDebugResult = (result) => {
   const timestamp = new Date().toISOString();
   const debugEntry = {
